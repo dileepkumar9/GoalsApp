@@ -94,3 +94,5 @@ mongoose.connect(
     }
   }
 );
+
+module.exports = app; // Export the app
