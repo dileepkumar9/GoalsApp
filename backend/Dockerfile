@@ -10,7 +10,8 @@ COPY . .
 
 EXPOSE 3000 
 
-ENV MONGO_URL=mongodb://localhost:27017/course-goals
+ENV MONGO_URL=mongodb+srv://dileep:secret32412@cluster0.61vv0.mongodb.net/course-goals?retryWrites=true&w=majority&appName=Cluster0
+
 
 ENV PORT=3000
 
