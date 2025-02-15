@@ -1,88 +1,29 @@
-pipeline
-{
+pipeline{
     agent any
-    tools
-    {
+    tools{
         nodejs 'NODEJS23'
-    }
-    stages
-    {
-       
         
-        stage('INSTALL DEPENDENCIES')
+    }
+    stages{
+        stage('Install Dependencies')
         {
             steps{
             sh '''
-             cd backend 
-             npm install
+               cd backend 
+               npm install --no-audit
                '''
-             }
-        }
-        stage('Test')
-        {
-            steps
-            {
-                sh '''
-                cd backend
-                npm test
-                '''
             }
         }
-        stage('Coverage')
-        {
-            steps
-            {
-                sh '''
-                cd backend
-                npm run coverage
-                '''
-            }
-        }
-        stage('Docker build')
-        {
-            steps
-            {
-                sh '''
-                cd backend
-                
-                docker build  -t pdileepkumar/backendimage:${GIT_COMMIT} .
-                
-                '''
-            }
-        }
-        stage('Docker push')
-        {
-            steps
-            {
-            
-            withDockerRegistry(credentialsId: 'docker-creds', url: "") {
-    
-       
-               sh  'docker push pdileepkumar/backendimage:${GIT_COMMIT}' 
-                                                                          }
-            }
-        }
-        stage('k8s')
-        {
-          steps {
-                sh 'git clone -b main https://github.com/dileepkumar9/backend-manifest.git'
-        //         dir("backend-manifest") {
-        //             sh '''
-        //                 git checkout main
-        //                 sed -i "s#pdileepkumar.*#pdileepkumar/backendimage:${GIT_COMMIT}#g" Deployment.yaml
 
-        //                 cat Deployment.yaml
-                        
-        //                 git config --global user.email "pdileepkumar12133@gmail.com"
-        //                 git remote set-url origin https://$GIT_TOKEN@github.com/dileepkumar9/backend-manifest.git
-        //                 git add .
-        //                 git commit -am "Updated the docker image"
-        //                 git push -u origin main
-        //             '''
-        //         }
-        //     }                
+        stage('Dendency check-OWASP')
+        {
+            steps{
+            sh '''
+               cd backend 
+               dependencyCheck additionalArguments: '--scan backend/ --out backend/OWASP-report  --disableYarnAudit --prettyPrint --format ALL', odcInstallation: 'DC-12', skipOnScmChange: true, skipOnUpstreamChange: true, stopBuild: true
+               '''
+            }
+            
         }
-        
-        
     }
 }
