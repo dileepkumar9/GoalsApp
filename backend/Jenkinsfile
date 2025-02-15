@@ -7,6 +7,7 @@ pipeline{
     stages{
         stage('Install Dependencies')
         {
+            options{timestamps()}
             steps{
             sh '''
                cd backend 
@@ -19,7 +20,8 @@ pipeline{
         {
             steps{
             
-               dependencyCheck additionalArguments: '--scan backend/ --out backend/OWASP-report  --disableYarnAudit --prettyPrint --format ALL', odcInstallation: 'DC-12', skipOnScmChange: true, skipOnUpstreamChange: true, stopBuild: true
+               dependencyCheck additionalArguments: '--scan backend/ --out backend/OWASP-report  --disableYarnAudit --prettyPrint --format ALL', 
+               odcInstallation: 'DC-12'
                
             }
             
