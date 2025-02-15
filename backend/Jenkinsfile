@@ -18,10 +18,9 @@ pipeline{
         stage('Dendency check-OWASP')
         {
             steps{
-            sh '''
-               cd backend 
+            
                dependencyCheck additionalArguments: '--scan backend/ --out backend/OWASP-report  --disableYarnAudit --prettyPrint --format ALL', odcInstallation: 'DC-12', skipOnScmChange: true, skipOnUpstreamChange: true, stopBuild: true
-               '''
+               
             }
             
         }
