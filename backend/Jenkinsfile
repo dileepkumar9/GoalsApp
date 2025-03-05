@@ -3,7 +3,7 @@ pipeline{
     tools{
         nodejs 'NODEJS23'
     }
-    environments
+    environment
     {
         SONAR_SCANNER_HOME= tool 'sonarqube-7'
     }
