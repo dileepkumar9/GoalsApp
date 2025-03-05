@@ -1,5 +1,8 @@
 pipeline{
     agent any
+    tools{
+        nodejs 'NODEJS23'
+    }
     stages{
         stage{
             steps{
