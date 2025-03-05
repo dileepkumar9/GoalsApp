@@ -14,7 +14,7 @@ pipeline{
         {
             steps{
             sh '''
-              cd backend/
+              cd backend
               npm test
               '''
             }
@@ -23,7 +23,7 @@ pipeline{
         {
             steps{
             sh '''
-              cd backend/
+              cd backend
               npm run coverage
               '''
             }
