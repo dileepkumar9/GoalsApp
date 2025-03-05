@@ -4,7 +4,7 @@ pipeline{
         nodejs 'NODEJS23'
     }
     stages{
-        stage{
+        stage('print'){
             steps{
                 sh 'npm -v'
             }
