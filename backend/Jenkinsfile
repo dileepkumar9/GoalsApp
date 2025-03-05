@@ -3,12 +3,12 @@ pipeline{
     tools{
         nodejs 'NODEJS23'
     }
+    environments
+    {
+        SONAR_SCANNER_HOME= tool 'sonarqube-7'
+    }
     stages{
-        stage('print'){
-            steps{
-                sh 'cov-build --version'
-            }
-        }
+    
         stage('Install dependencies')
         {
             steps{
@@ -34,6 +34,18 @@ pipeline{
               cd backend
               npm run coverage
               '''
+            }
+        }
+        stage('SAST-sonarqube')
+        {
+            steps{
+            sh '''
+                $SONAR_SCANNER_HOME/bin/sonar-scanner \
+                -Dsonar.projectKey=goalsapp \
+                -Dsonar.host.url=http://3.108.61.101:9000 \
+                -Dsonar.login=sqp_7d30bbc0ee8b709d1c919303f17bfb82a6df6131
+        
+            '''
             }
         }
     } 
