@@ -6,7 +6,7 @@ pipeline{
             steps{
             sh '''
                 cd backend/
-                npm install --no-audit
+                npm install 
                 '''
             }
         }
