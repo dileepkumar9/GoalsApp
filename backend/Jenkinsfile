@@ -6,7 +6,7 @@ pipeline{
     stages{
         stage('print'){
             steps{
-                sh 'npm -v'
+                sh 'cov-build --version'
             }
         }
         stage('Install dependencies')
