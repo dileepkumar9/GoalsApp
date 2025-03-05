@@ -1,16 +1,31 @@
 pipeline{
     agent any
     stages{
-        stage('Print')
+        stage('Install dependencies')
         {
             steps{
-            echo 'print'
+            sh '''
+                cd backend/
+                npm install --no-audit
+                '''
             }
         }
-        stage('Print1')
+        stage('npm test')
         {
             steps{
-            sh 'git -v'
+            sh '''
+              cd backend/
+              npm test
+              '''
+            }
+        }
+        stage('npm coverage')
+        {
+            steps{
+            sh '''
+              cd backend/
+              npm run coverage
+              '''
             }
         }
     } 
